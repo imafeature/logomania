@@ -1,0 +1,32 @@
+{
+  "intents": [
+    {
+      "intent": "GetSomeDaysWordIntent",
+      "slots": [
+        {
+          "name": "date",
+          "type": "AMAZON.DATE"
+        }//,
+    //     {
+    //       "name": "day",
+    //       "type": "string"
+    //     },
+    //   ]
+    // },
+    {
+      "intent": "GetTodaysWordIntent"
+    },
+    {
+      "intent": "GetPreviousWordIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}

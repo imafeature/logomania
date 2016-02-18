@@ -1,0 +1,47 @@
+GetTodaysWordIntent get today's word of the day
+GetTodaysWordIntent get today's word
+GetTodaysWordIntent what's today's word of the day
+GetTodaysWordIntent what today's word
+GetTodaysWordIntent word of the day
+GetTodaysWordIntent for the word of the day
+GetTodaysWordIntent give me today's word
+GetTodaysWordIntent give me the word of the day
+GetTodaysWordIntent today's
+
+GetSomeDaysWordIntent get word for {date}
+GetSomeDaysWordIntent give me {date}'s word of the day
+GetSomeDaysWordIntent give me the word of the day from {date} 
+GetSomeDaysWordIntent what was the word of the day {date}
+GetSomeDaysWordIntent what was the word of the day on {date}
+GetSomeDaysWordIntent what the word of the day was on {date}
+GetSomeDaysWordIntent {date}
+
+GetPreviousWordIntent yes
+GetPreviousWordIntent yup
+GetPreviousWordIntent sure
+GetPreviousWordIntent yes please
+GetPreviousWordIntent yeah
+
+GetExampleSentenceIntent sentence
+GetExampleSentenceIntent use it in a sentence
+GetExampleSentenceIntent I want to hear it in a sentence
+GetExampleSentenceIntent hear it in a sentence
+
+AMAZON.StopIntent nah, I'm done
+AMAZON.StopIntent no, I'm done
+AMAZON.StopIntent no, I'm finished
+AMAZON.StopIntent no, that's all
+AMAZON.StopIntent I'm done
+AMAZON.StopIntent I'm finished
+AMAZON.StopIntent that's all
+AMAZON.StopIntent none
+AMAZON.StopIntent no
+
+
+
+
+
+
+
+
+
