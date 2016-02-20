@@ -171,18 +171,27 @@ function handleGetTodaysWordRequest(intent, session, response) {
 
         try{
 
-            var rsp = res();
-
-            var wotd = rsp.results[0].div.strong;
-            var temp = rsp.results[1].ol.li.span;            
-
+            var definition;
             var defs = [];
-            defs.push(temp);
-            
-            // for (var i = 0; i < temp.length || i < 0; i++){
-            //     var definition = JSON.parse(temp[i]);
-            //     defs.push((i+1)+ ". " + definition.span);
-            // } 
+            var rsp = res();
+            var wotd = rsp.results[0].div.strong;
+            var temp = rsp.results[1].ol.li;
+
+
+            if (Array.isArray(temp)){
+           
+                for (var i = 0; i < temp.length; i++){
+
+                    definition = temp[i].span.content || temp[i].span;
+                    defs.push((i+1)+ ". " + definition);
+                } 
+
+            } else {
+
+                definition = temp.span || temp.span.content;
+                defs.push(definition);  
+
+            }
 
             var cardTitle = wotd.toUpperCase() + JSON.stringify(rsp);
             var prefixContent = "The Word of the Day for " + monthNames[d.getMonth()] + " " + day + ", " + year + " is " + wotd + ", which means: ";
@@ -192,10 +201,10 @@ function handleGetTodaysWordRequest(intent, session, response) {
 
             for (i = 0; i < defs.length; i++) {
                 cardContent = cardContent + defs[i] + " ";
-                speechText = speechText + defs[i];
+                speechText = speechText + defs[i] + " ";
             }
             
-            speechText = speechText + " Would you like me to use it in a sentence or retrieve a previous word of the day?";
+            speechText = speechText + " Would you like to hear a previous word of the day?";
             var speechOutput = prefixContent + speechText;
 
             response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
@@ -208,15 +217,11 @@ function handleGetTodaysWordRequest(intent, session, response) {
             response.tellWithCard(speechText,cardContent);
         
         }    
-        
-       
+              
     });
 
 }
 
-/**
- * Gets a poster prepares the speech to reply to the user.
- */
 function handleSomeDaysWordRequest(intent, session, response) {
 //     var cardTitle = "More events on this day in history",
 //         sessionAttributes = session.attributes,
@@ -256,47 +261,6 @@ function handleSomeDaysWordRequest(intent, session, response) {
 //     response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
     response.tell("The get previous word of the day intent has been triggered. Proper behavior will be implemented soon.");
  }
-
-function handleExampleSentenceRequest(intent, session, response) {
-    // var cardTitle = "More events on this day in history",
-    //     sessionAttributes = session.attributes,
-    //     result = sessionAttributes.text,
-    //     speechText = "",
-    //     cardContent = "",
-    //     repromptText = "Do you want to know more about what happened on this date?",
-    //     i;
-    // if (!result) {
-    //     speechText = "With History Buff, you can get historical events for any day of the year.  For example, you could say today, or August thirtieth. Now, which day do you want?";
-    //     cardContent = speechText;
-    // } else if (sessionAttributes.index >= result.length) {
-    //     speechText = "There are no more events for this date. Try another date by saying <break time = \"0.3s\"/> get events for august thirtieth.";
-    //     cardContent = "There are no more events for this date. Try another date by saying, get events for august thirtieth.";
-    // } else {
-    //     for (i = 0; i < paginationSize; i++) {
-    //         if (sessionAttributes.index>= result.length) {
-    //             break;
-    //         }
-    //         speechText = speechText + "<p>" + result[sessionAttributes.index] + "</p> ";
-    //         cardContent = cardContent + result[sessionAttributes.index] + " ";
-    //         sessionAttributes.index++;
-    //     }
-    //     if (sessionAttributes.index < result.length) {
-    //         speechText = speechText + " Wanna go deeper in history?";
-    //         cardContent = cardContent + " Wanna go deeper in history?";
-    //     }
-    // }
-    // var speechOutput = {
-    //     speech: "<speak>" + speechText + "</speak>",
-    //     type: AlexaSkill.speechOutputType.SSML
-    // };
-    // var repromptOutput = {
-    //     speech: repromptText,
-    //     type: AlexaSkill.speechOutputType.PLAIN_TEXT
-    // };
-    // response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
-    response.tell("The use in a sentence intent has been triggered. Proper behavior will be implemented soon.");
- }
-
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
