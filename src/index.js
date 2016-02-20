@@ -94,14 +94,8 @@ LogophileSkill.prototype.intentHandlers = {
     }
 };
 
-/**
- * Function to handle the onLaunch skill behavior
- */
-
 function getWelcomeResponse(response) {
-    
-// If we wanted to initialize the session to have some attributes we could add those here.
-    
+       
     var cardTitle = "Word of the Day";
     var repromptOutput = "You can use Logophile to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
@@ -138,7 +132,7 @@ function handleGetTodaysWordRequest(intent, session, response) {
 
     var baseQueryURL = "dictionary.reference.com%2Fwordoftheday";
     var slash = "%2F"; 
-    var queryURL = "url%3D'"+baseQueryURL +slash+year+ slash+month+slash+day+"'"; 
+    var queryURL = "url%3D'"+baseQueryURL+slash+year+slash+month+slash+day+"'"; 
 
     var start = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20data.html.cssselect%20WHERE%20(";
     var mid = "%20AND%20css%3D'div.definition-header')%20OR%20("
@@ -174,9 +168,8 @@ function handleGetTodaysWordRequest(intent, session, response) {
             var definition;
             var defs = [];
             var rsp = res();
-            var wotd = rsp.results[0].div.strong;
+            var wotd = rsp.results[0].div.strong || rsp.results[0].div.h1.strong;
             var temp = rsp.results[1].ol.li;
-
 
             if (Array.isArray(temp)){
            
@@ -184,22 +177,26 @@ function handleGetTodaysWordRequest(intent, session, response) {
 
                     definition = temp[i].span.content || temp[i].span;
                     defs.push((i+1)+ ". " + definition);
+
                 } 
 
             } else {
-
+                
                 definition = temp.span || temp.span.content;
                 defs.push(definition);  
-
+            
             }
 
-            var cardTitle = wotd.toUpperCase() + JSON.stringify(rsp);
+            var cardTitle = wotd.toUpperCase();
             var prefixContent = "The Word of the Day for " + monthNames[d.getMonth()] + " " + day + ", " + year + " is " + wotd + ", which means: ";
-            var cardContent = "The Word of the Day for " + monthNames[d.getMonth()] + " " + day + ", " + year + " is " + wotd + ", which means:";
+            var cardContent = "The Word of the Day for " + monthNames[d.getMonth()] + " " + day + ", " + year + " is " + wotd + ", which means: ";
 
             var speechText = "";   
 
-            for (i = 0; i < defs.length; i++) {
+            if (defs.length == 0)
+                throw new Error("There was a problem retrieving the definition for " + wotd + ", today's word of the day.");
+
+            for (var i = 0; i < defs.length; i++) {
                 cardContent = cardContent + defs[i] + " ";
                 speechText = speechText + defs[i] + " ";
             }
@@ -212,11 +209,13 @@ function handleGetTodaysWordRequest(intent, session, response) {
 
         catch(err) {
         
-            speechText = JSON.stringify(rsp) + "There is a problem connecting to Dictionary.com at this time. Please try again later.";
+            err = err || "There is a problem connecting to Dictionary.com at this time. Please try again later.";
+            speechText = err;
             cardContent = err;
-            response.tellWithCard(speechText,cardContent);
+            cardTitle = "Word of the Day";
+            response.tellWithCard(speechText,cardTitle,cardContent);
         
-        }    
+        }     
               
     });
 
