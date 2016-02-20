@@ -17,8 +17,6 @@
 var APP_ID = "amzn1.echo-sdk-ams.app.ba54358d-ea2f-4bb8-b40f-320aa2d5a108";
 var AlexaSkill = require('./AlexaSkill');
 var Promise = require('./es6-promise').Promise;
-var XMLHttpRequest = require("./xmlhttprequest").XMLHttpRequest;
-
 var https = require('https');
 
 var LogophileSkill = function() {
@@ -84,7 +82,7 @@ LogophileSkill.prototype.intentHandlers = {
     },
 
     "AMAZON.StopIntent": function (intent, session, response) {
-        var speechOutput = "Closing Logophile. Be sure to ask for the new Word of the Day tomorrow.";
+        var speechOutput = "Closing Logophile. Be sure to check back tommorow for a new Word of the Day.";
         response.tell(speechOutput);
     },
 
@@ -176,6 +174,8 @@ function handleGetTodaysWordRequest(intent, session, response) {
                 for (var i = 0; i < temp.length; i++){
 
                     definition = temp[i].span.content || temp[i].span;
+                    definition = definition.replace(':','');
+
                     defs.push((i+1)+ ". " + definition);
 
                 } 
@@ -183,13 +183,17 @@ function handleGetTodaysWordRequest(intent, session, response) {
             } else {
                 
                 definition = temp.span || temp.span.content;
+                definition = definition.replace(':','');
+
                 defs.push(definition);  
             
             }
 
-            var cardTitle = wotd.toUpperCase();
-            var prefixContent = "The Word of the Day for " + monthNames[d.getMonth()] + " " + day + ", " + year + " is " + wotd + ", which means: ";
-            var cardContent = "The Word of the Day for " + monthNames[d.getMonth()] + " " + day + ", " + year + " is " + wotd + ", which means: ";
+            var spokenDate = monthNames[d.getMonth()] + " " + day + ", " + year;
+
+            var cardTitle = wotd.toUpperCase() + ": Word of the Day for " + spokenDate;
+            var prefixContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
+            var cardContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
 
             var speechText = "";   
 
@@ -201,7 +205,7 @@ function handleGetTodaysWordRequest(intent, session, response) {
                 speechText = speechText + defs[i] + " ";
             }
             
-            speechText = speechText + " Would you like to hear a previous word of the day?";
+            speechText = speechText + "Would you like to hear a previous word of the day?";
             var speechOutput = prefixContent + speechText;
 
             response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
