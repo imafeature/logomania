@@ -39,10 +39,12 @@ function WordRequest(date){
 
     this.spokenDate = function(){
         
+        var day = (this.day.charAt(0) == '0') ? this.day.replace('0','') : this.day;
+
         var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];   
         
-        return monthNames[this.date.getMonth()] + " " + this.day + ", " + this.year;
+        return monthNames[this.date.getMonth()] + " " + day + ", " + this.year;
     };
 
     //builds query

@@ -1,0 +1,21 @@
+{
+  "session": {
+    "sessionId": "SessionId.948bc780-302a-4e4a-9e49-8587e9fc7135",
+    "application": {
+      "applicationId": "amzn1.echo-sdk-ams.app.ba54358d-ea2f-4bb8-b40f-320aa2d5a108"
+    },
+    "user": {
+      "userId": "amzn1.echo-sdk-account.AHNYT3BRICDLOFE4RVCRHM7WK7BHI5QX2I4O25UWWX3KWSDBWYKRA"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.ad246479-24df-442c-88f1-cb421ce0e3d2",
+    "timestamp": "2016-02-21T21:19:56Z",
+    "intent": {
+      "name": "GetRandomWordIntent",
+      "slots": {}
+    }
+  }
+}

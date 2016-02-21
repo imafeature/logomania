@@ -1,0 +1,26 @@
+{
+  "session": {
+    "sessionId": "SessionId.b7f56d28-68ec-48bb-b646-bd8a665afee4",
+    "application": {
+      "applicationId": "amzn1.echo-sdk-ams.app.ba54358d-ea2f-4bb8-b40f-320aa2d5a108"
+    },
+    "user": {
+      "userId": "amzn1.echo-sdk-account.AHNYT3BRICDLOFE4RVCRHM7WK7BHI5QX2I4O25UWWX3KWSDBWYKRA"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.53ef91a0-6360-4f6e-addf-ac39e509f700",
+    "timestamp": "2016-02-21T16:51:39Z",
+    "intent": {
+      "name": "GetSomeDaysWordIntent",
+      "slots": {
+        "date": {
+          "name": "date",
+          "value": "2012-04-01"
+        }
+      }
+    }
+  }
+}
