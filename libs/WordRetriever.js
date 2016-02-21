@@ -3,14 +3,22 @@ var https = require('https');
 
 function WordRequest(date){
     
+    var firstWordDate = new Date("1999-05-03");
+    var todaysDate = new Date();
+
     if (!date || date.valueOf() % 1 !== 0 ) {
 
-        date = new Date();
-        
-    } else {
+      date = todaysDate;
 
-        if (date > new Date())
-            date.setMonth(date.getMonth() -12)
+    } else if (date < firstWordDate) {
+
+      date = firstWordDate;
+
+    } else if (date > todaysDate) {
+
+      var lastYear =  todaysDate.getFullYear() - 1;
+      date.setFullYear(lastYear);
+
     }
 
     this.date = date;
@@ -117,8 +125,12 @@ function WordRequest(date){
             }
 
             var cardTitle = wotd.toUpperCase() + ": " + spokenDate + " Word of the Day";
-            var prefixContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
             var cardContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
+
+            var prefixContent = (spokenDate == "May 03, 1999") ? "Dictionary.com did not begin providing words of the day until " + spokenDate + ". " + 
+                    spokenDate + "'s Word of the Day was " : "The Word of the Day for " + spokenDate + " is " ;
+                prefixContent += wotd + ", which means: ";
+            
 
             var speechText = ""; 
             var speechOutput;  
@@ -130,13 +142,11 @@ function WordRequest(date){
                 cardContent = cardContent + defs[i] + " ";
                 speechText = speechText + defs[i] + " ";
             }
-            
-            speechText = speechText + "Would you like to hear a previous word of the day?";
+
+            speechText = speechText + "Would you like to hear another day's word of the day?";
             speechOutput = prefixContent + speechText;
 
             response = {
-                // this.word = wotd;
-                // this.definitions = defs;
                 speechOutput : speechOutput,
                 cardTitle : cardTitle,
                 cardContent : cardContent,
