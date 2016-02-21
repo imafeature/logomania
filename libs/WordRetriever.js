@@ -7,7 +7,7 @@ function WordRequest(date){
     
     this.date = date;
     this.year = date.getFullYear() + "";
-    this.month = "" + date.getMonth()+1;
+    this.month = "" + (date.getMonth()+1);
     this.day = "" + date.getDate();  
 
     this.parsedResponse = {};
@@ -98,7 +98,7 @@ function WordRequest(date){
 
             } else {
                 
-                definition = temp.span || temp.span.content;
+                definition = temp.span.content || temp.span;
                 definition = definition.replace(':','');
 
                 defs.push(definition);  
