@@ -109,43 +109,46 @@ function handleGetTodaysWordRequest(intent, session, response) {
 }
 
 function handleSomeDaysWordRequest(intent, session, response) {
-    // var cardTitle = "More events on this day in history",
-    //     sessionAttributes = session.attributes,
-    //     result = sessionAttributes.text,
-    //     speechText = "",
-    //     cardContent = "",
-    //     repromptText = "Do you want to know more about what happened on this date?",
-    //     i;
-    // if (!result) {
-    //     speechText = "With History Buff, you can get historical events for any day of the year.  For example, you could say today, or August thirtieth. Now, which day do you want?";
-    //     cardContent = speechText;
-    // } else if (sessionAttributes.index >= result.length) {
-    //     speechText = "There are no more events for this date. Try another date by saying <break time = \"0.3s\"/> get events for august thirtieth.";
-    //     cardContent = "There are no more events for this date. Try another date by saying, get events for august thirtieth.";
-    // } else {
-    //     for (i = 0; i < paginationSize; i++) {
-    //         if (sessionAttributes.index>= result.length) {
-    //             break;
-    //         }
-    //         speechText = speechText + "<p>" + result[sessionAttributes.index] + "</p> ";
-    //         cardContent = cardContent + result[sessionAttributes.index] + " ";
-    //         sessionAttributes.index++;
-    //     }
-    //     if (sessionAttributes.index < result.length) {
-    //         speechText = speechText + " Wanna go deeper in history?";
-    //         cardContent = cardContent + " Wanna go deeper in history?";
-    //     }
-    // }
-    // var speechOutput = {
-    //     speech: "<speak>" + speechText + "</speak>",
-    //     type: AlexaSkill.speechOutputType.SSML
-    // };
-    // var repromptOutput = {
-    //     speech: repromptText,
-    //     type: AlexaSkill.speechOutputType.PLAIN_TEXT
-    // };
-    // response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
-    response.tell("The get previous word of the day intent has been triggered. Proper behavior will be implemented soon.");
+    
+    var date;
+    var dateFromSlot = new Date(intent.slots.date.value);
+
+    if (dateFromSlot.valueOf() % 1 !== 0 ) {
+
+        date = new Date();
+        
+    } else {
+
+        if (dateFromSlot > new Date())
+            dateFromSlot.setMonth(dateFromSlot.getMonth() -12)
+
+        date = dateFromSlot;
+    }
+
+    var wordRequest = new WordRequest(date);
+
+    //Defines output variables with the promised data
+    wordRequest.requestWord()
+
+        .then(function(res){
+            wordRequest.parsedResponse = wordRequest.returnWord(res);
+            return wordRequest;
+        })
+
+        .then(function(wordObj){
+
+            var output = wordObj.parsedResponse;
+
+            var speechOutput = output.speechOutput;
+            var cardTitle = output.cardTitle;
+            var cardContent = output.cardContent;
+            var repromptOutput = "You can use Logophile to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
+            "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
+   
+            response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
+                
+        });
+
  }
 
 // Create the handler that responds to the Alexa Request.

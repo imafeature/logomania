@@ -101,6 +101,8 @@ function WordRequest(date){
                 definition = temp.span.content || temp.span;
                 definition = definition.replace(':','');
 
+                //TODO: fix the weird space before appended period
+
                 defs.push(definition);  
             
             }
