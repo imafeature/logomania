@@ -110,21 +110,7 @@ function handleGetTodaysWordRequest(intent, session, response) {
 
 function handleSomeDaysWordRequest(intent, session, response) {
     
-    var date;
-    var dateFromSlot = new Date(intent.slots.date.value);
-
-    if (dateFromSlot.valueOf() % 1 !== 0 ) {
-
-        date = new Date();
-        
-    } else {
-
-        if (dateFromSlot > new Date())
-            dateFromSlot.setMonth(dateFromSlot.getMonth() -12)
-
-        date = dateFromSlot;
-    }
-
+    var date = new Date(intent.slots.date.value);
     var wordRequest = new WordRequest(date);
 
     //Defines output variables with the promised data

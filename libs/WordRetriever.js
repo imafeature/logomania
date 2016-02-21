@@ -3,8 +3,16 @@ var https = require('https');
 
 function WordRequest(date){
     
-    date = date || new Date();
-    
+    if (!date || date.valueOf() % 1 !== 0 ) {
+
+        date = new Date();
+        
+    } else {
+
+        if (date > new Date())
+            date.setMonth(date.getMonth() -12)
+    }
+
     this.date = date;
     this.year = date.getFullYear() + "";
     this.month = "" + (date.getMonth()+1);
@@ -102,6 +110,7 @@ function WordRequest(date){
                 definition = definition.replace(':','');
 
                 //TODO: fix the weird space before appended period
+                //      and the occasional randomly prepended period
 
                 defs.push(definition);  
             
