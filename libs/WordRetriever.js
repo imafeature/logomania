@@ -16,8 +16,17 @@ function WordRequest(date){
 
     } else if (date > todaysDate) {
 
-      var lastYear =  todaysDate.getFullYear() - 1;
-      date.setFullYear(lastYear);
+      var thisYear = todaysDate.getFullYear();
+
+      if (date.getFullYear() === thisYear + 1){
+
+        date.setFullYear(thisYear);
+
+      } else {
+
+        date.setFullYear(thisYear - 1);
+      
+      }
 
     }
 
