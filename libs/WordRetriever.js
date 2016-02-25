@@ -1,3 +1,8 @@
+//Changes: 
+// -added url as WordRequest object property
+// -added url to response card 
+// -added attributes property to WordRequest
+
 var Promise = require('./es6-promise').Promise;
 var https = require('https');
 
@@ -34,6 +39,8 @@ function WordRequest(date){
     this.year = date.getFullYear() + "";
     this.month = "" + (date.getMonth()+1);
     this.day = "" + date.getDate();  
+    this.url = "dictionary.reference.com/wordoftheday/" 
+    this.
 
     this.parsedResponse = {};
 
@@ -43,7 +50,7 @@ function WordRequest(date){
 
         var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];   
-        
+
         return monthNames[this.date.getMonth()] + " " + day + ", " + this.year;
     };
 
@@ -55,6 +62,8 @@ function WordRequest(date){
 
         if (this.day.length < 2)
             this.day = "0" + this.day;
+
+        this.url = "http://dictionary.reference.com/wordoftheday/" + this.year + "/" + this.month + "/" +this.day
 
         var baseQueryURL = "dictionary.reference.com%2Fwordoftheday";
         var slash = "%2F"; 
@@ -103,9 +112,10 @@ function WordRequest(date){
     this.returnWord = function(res) {
 
         try{
-                        
+                                    
             var definition;
             var defs = [];
+            var attributes = {};
             var response = {};
             var rsp = res();
             var wotd = rsp.results[0].div.strong || rsp.results[0].div.h1.strong;
@@ -157,10 +167,16 @@ function WordRequest(date){
             speechText = speechText + "Would you like to hear another day's word of the day?";
             speechOutput = prefixContent + speechText;
 
+            attributes.word = wotd;
+            attributes.definition = defs;
+            attributes.url = this.url;
+            attributes.query = this.query();
+
             response = {
                 speechOutput : speechOutput,
                 cardTitle : cardTitle,
-                cardContent : cardContent,
+                cardContent : cardContent + " Read more at: " + this.url,
+                attributes : this.attributes
             };
 
             return response;
@@ -173,7 +189,8 @@ function WordRequest(date){
             response = {
                 speechText : err,
                 cardTitle : "Word of the Day",
-                cardContent : err
+                cardContent : err,
+                attributes: this.attributes
             };
 
             return response;

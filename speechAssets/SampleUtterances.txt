@@ -1,23 +1,28 @@
 GetTodaysWordIntent get today's word of the day
 GetTodaysWordIntent get today's word
 GetTodaysWordIntent what's today's word of the day
-GetTodaysWordIntent what today's word
+GetTodaysWordIntent what today's word is
+GetTodaysWordIntent what is today's word
 GetTodaysWordIntent word of the day
-GetTodaysWordIntent for the word of the day
+GetTodaysWordIntent the word of the day
+GetTodaysWordIntent what the word is
+GetTodaysWordIntent what the word is for today
 GetTodaysWordIntent give me today's word
 GetTodaysWordIntent give me the word of the day
 GetTodaysWordIntent today's
+GetTodaysWordIntent today's word
 
-GetSomeDaysWordIntent get word for {date}
+GetSomeDaysWordIntent get word {date}
 GetSomeDaysWordIntent give me {date} word of the day
 GetSomeDaysWordIntent give me the word of the day from {date} 
 GetSomeDaysWordIntent what was the word of the day {date}
 GetSomeDaysWordIntent what was the word of the day on {date}
 GetSomeDaysWordIntent what the word of the day was on {date}
 GetSomeDaysWordIntent {date}
+GetSomeDaysWordIntent {date} word
 
 GetSomeDaysWordIntent get word from {Day}
-GetSomeDaysWordIntent get word for {Day}
+GetSomeDaysWordIntent get word {Day}
 GetSomeDaysWordIntent get {Day} word
 GetSomeDaysWordIntent get {Day} word of the day
 GetSomeDaysWordIntent tell me the word of the day from {Day} 
@@ -26,22 +31,27 @@ GetSomeDaysWordIntent what was {Day} word of the day
 GetSomeDaysWordIntent what was the word of the day {Day}
 GetSomeDaysWordIntent what was the word of the day on {Day}
 GetSomeDaysWordIntent what the word of the day was {Day}
+GetSomeDaysWordIntent {Day} word
 GetSomeDaysWordIntent {Day}
 
 GetRandomWordIntent get a word of the day
 GetRandomWordIntent get me a random word
 GetRandomWordIntent get me a word of the day
 GetRandomWordIntent get me some word of the day
-GetRandomWordIntent for a random word
-GetRandomWordIntent for a word
+GetRandomWordIntent a random word
+GetRandomWordIntent a word
 GetRandomWordIntent give me a word
 GetRandomWordIntent give me any word of the day
 GetRandomWordIntent tell me a word of the day
-GetRandomWordIntent for an arbitrary word
+GetRandomWordIntent an arbitrary word
 GetRandomWordIntent tell me a random days word of the day
 GetRandomWordIntent surprise me
 GetRandomWordIntent tell me a word of the day
 GetRandomWordIntent surprise me with a word of the day
+GetRandomWordIntent some word
+GetRandomWordIntent any word
+GetRandomWordIntent random
+GetRandomWordIntent something random
 
 AMAZON.YesIntent yes
 AMAZON.YesIntent yup
@@ -49,7 +59,6 @@ AMAZON.YesIntent sure
 AMAZON.YesIntent yes please
 AMAZON.YesIntent yeah
 
-AMAZON.StopIntent nah I'm done
 AMAZON.StopIntent no I'm done
 AMAZON.StopIntent no I'm finished
 AMAZON.StopIntent no that's all
@@ -58,5 +67,32 @@ AMAZON.StopIntent I'm finished
 AMAZON.StopIntent that's all
 AMAZON.StopIntent none
 AMAZON.StopIntent no
+AMAZON.StopIntent nah
+
+AMAZON.CancelIntent nothing
+AMAZON.CancelIntent never mind
+AMAZON.CancelIntent that's enough
+AMAZON.CancelIntent none
+AMAZON.CancelIntent I'm finished
+AMAZON.CancelIntent alright
+AMAZON.CancelIntent goodbye
 
 AMAZON.HelpIntent help
+AMAZON.HelpIntent I don't understand
+AMAZON.HelpIntent what can you do
+AMAZON.HelpIntent what does this skill do
+AMAZON.HelpIntent how do I use this skill
+AMAZON.HelpIntent what can I ask you
+AMAZON.HelpIntent get help
+AMAZON.HelpIntent what can you do
+AMAZON.HelpIntent how do I use you
+AMAZON.HelpIntent I don't get it
+AMAZON.HelpIntent huh
+AMAZON.HelpIntent What should I say
+AMAZON.HelpIntent what can can I ask
+AMAZON.HelpIntent how does this work
+AMAZON.HelpIntent help me
+AMAZON.HelpIntent I need help
+AMAZON.HelpIntent I'm confused
+AMAZON.HelpIntent wait what
+AMAZON.HelpIntent what do I do
