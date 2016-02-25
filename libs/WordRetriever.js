@@ -11,7 +11,7 @@ function WordRequest(date){
     var firstWordDate = new Date("1999-05-03");
     var todaysDate = new Date();
 
-    if (!date || date.valueOf() % 1 !== 0 ) {
+    if (!date || isNaN(date.valueOf())) {
 
       date = todaysDate;
 
@@ -35,12 +35,13 @@ function WordRequest(date){
 
     }
 
+    
     this.date = date;
+    this.weekday = date.getDay();
     this.year = date.getFullYear() + "";
     this.month = "" + (date.getMonth()+1);
     this.day = "" + date.getDate();  
     this.url = "dictionary.reference.com/wordoftheday/" 
-    this.
 
     this.parsedResponse = {};
 
@@ -48,10 +49,11 @@ function WordRequest(date){
         
         var day = (this.day.charAt(0) == '0') ? this.day.replace('0','') : this.day;
 
+        var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];   
 
-        return monthNames[this.date.getMonth()] + " " + day + ", " + this.year;
+        return dayNames[this.weekday] + ", " + monthNames[this.date.getMonth()] + " " + day + ", " + this.year;
     };
 
     //builds query
@@ -148,8 +150,8 @@ function WordRequest(date){
             var cardTitle = wotd.toUpperCase() + ": " + spokenDate + " Word of the Day";
             var cardContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
 
-            var prefixContent = (spokenDate == "May 03, 1999") ? "Dictionary.com did not begin providing words of the day until " + spokenDate + ". " + 
-                    spokenDate + "'s Word of the Day was " : "The Word of the Day for " + spokenDate + " is " ;
+            var prefixContent = (spokenDate == "Monday, May 3, 1999") ? "Dictionary.com did not begin providing words of the day until " + spokenDate + 
+                    ". This inaugural Word of the Day was " : "The Word of the Day for " + spokenDate + " is " ;
                 prefixContent += wotd + ", which means: ";
             
 
@@ -176,7 +178,7 @@ function WordRequest(date){
                 speechOutput : speechOutput,
                 cardTitle : cardTitle,
                 cardContent : cardContent + " Read more at: " + this.url,
-                attributes : this.attributes
+                attributes : attributes
             };
 
             return response;
@@ -190,7 +192,7 @@ function WordRequest(date){
                 speechText : err,
                 cardTitle : "Word of the Day",
                 cardContent : err,
-                attributes: this.attributes
+                attributes: attributes
             };
 
             return response;

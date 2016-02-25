@@ -13,6 +13,12 @@ GetTodaysWordIntent today's
 GetTodaysWordIntent today's word
 
 GetSomeDaysWordIntent get word {date}
+GetSomeDaysWordIntent the word on {date}
+GetSomeDaysWordIntent the word from {date}
+GetSomeDaysWordIntent the word of the day from {date}
+GetSomeDaysWordIntent the word of the day on {date}
+GetSomeDaysWordIntent what's the word {date}
+GetSomeDaysWordIntent the word of the day {date}
 GetSomeDaysWordIntent give me {date} word of the day
 GetSomeDaysWordIntent give me the word of the day from {date} 
 GetSomeDaysWordIntent what was the word of the day {date}
@@ -20,6 +26,8 @@ GetSomeDaysWordIntent what was the word of the day on {date}
 GetSomeDaysWordIntent what the word of the day was on {date}
 GetSomeDaysWordIntent {date}
 GetSomeDaysWordIntent {date} word
+GetSomeDaysWordIntent what {date} word was
+GetSomeDaysWordIntent what {date} word is
 
 GetSomeDaysWordIntent get word from {Day}
 GetSomeDaysWordIntent get word {Day}
@@ -33,6 +41,12 @@ GetSomeDaysWordIntent what was the word of the day on {Day}
 GetSomeDaysWordIntent what the word of the day was {Day}
 GetSomeDaysWordIntent {Day} word
 GetSomeDaysWordIntent {Day}
+GetSomeDaysWordIntent what {Day} word was
+GetSomeDaysWordIntent what {Day} word is
+GetSomeDaysWordIntent the word on {Day}
+GetSomeDaysWordIntent the word from {Day}
+GetSomeDaysWordIntent the word of the day from {Day}
+GetSomeDaysWordIntent the word of the day on {Day}
 
 GetRandomWordIntent get a word of the day
 GetRandomWordIntent get me a random word
@@ -51,7 +65,13 @@ GetRandomWordIntent surprise me with a word of the day
 GetRandomWordIntent some word
 GetRandomWordIntent any word
 GetRandomWordIntent random
+GetRandomWordIntent random
 GetRandomWordIntent something random
+GetRandomWordIntent any day's
+GetRandomWordIntent it doesn't matter
+GetRandomWordIntent doesn't matter
+GetRandomWordIntent I don't care
+GetRandomWordIntent don't care
 
 AMAZON.YesIntent yes
 AMAZON.YesIntent yup
