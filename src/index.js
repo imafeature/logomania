@@ -18,7 +18,7 @@ Verbivore.prototype.eventHandlers.onSessionStarted = function (sessionStartedReq
     console.log("Verbivore onSessionStarted requestId: " + sessionStartedRequest.requestId
         + ", sessionId: " + session.sessionId);
 
-    session.attributes.inquiry = "word";
+    session.attributes.requestInfo = {};
 };
 
 Verbivore.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
@@ -65,8 +65,10 @@ Verbivore.prototype.intentHandlers = {
         var speechOutput = "Verbivore returns Dictionary.com's Word of the Day. You can get today or another day's word by saying something like" +
             "What is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
         var repromptOutput = "Which date's Word of the Day would you like?";
+        var cardTitle = "About Verbivore Skill";
+        var cardContent = speechOutput;
 
-        response.ask(speechOutput, repromptOutput);
+        response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
     },
 
     "AMAZON.StopIntent": function (intent, session, response) {
@@ -85,7 +87,7 @@ function getWelcomeResponse(response) {
        
     var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
-    var speechOutput = "I have opened Verbivore. Specift a date, and I will give you that day's Word of the Day. Which day's Word of the Day do you like me to retrieve?";
+    var speechOutput = "I have opened Verbivore. What date's Word of the Day would you like me to retrieve?";
 
     response.ask(speechOutput, repromptOutput);
 }
@@ -112,6 +114,7 @@ function handleGetTodaysWordRequest(intent, session, response) {
             var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
    
+            session.attributes.requestInfo = output.attributes;
             response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
                 
         });
@@ -131,22 +134,26 @@ function handleSomeDaysWordRequest(intent, session, response) {
 
         var slotDay = intent.slots.Day.value;
 
-        if (slotDay.charAt(slotDay.length-1) != 'y')
-          slotDay = slotDay.substring(0, slotDay.length - 2);
-                  
-        var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday','yesterday'];
+        while (slotDay.charAt(slotDay.length-1) != 'y') {
+          slotDay = slotDay.substring(0, slotDay.length - 1);
+        }
+          
+        slotDay = slotDay.toUpperCase();
+
+        var days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','YESTERDAY'];
         var day = days.indexOf(slotDay);
         
-        console.log(day);
 
         var now = new Date();  
         var today = now.getDay();
 
         if (day === 7)
-          return new Date(now.setDate(now.getDate() - 2));
+          day = today - 1;
 
-        var offset =  7 - Math.abs(today - day);
-        var daysDate = now.getDate() - offset;
+        var offset = today - day;
+            offset = (offset <= 0) ? 7 - Math.abs(offset) : offset;
+
+        var daysDate = now.getDate() - offset; 
 
         return new Date(now.setDate(daysDate));
 
@@ -171,9 +178,10 @@ function handleSomeDaysWordRequest(intent, session, response) {
             var speechOutput = output.speechOutput;
             var cardTitle = output.cardTitle;
             var cardContent = output.cardContent;
-            var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
+            var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
    
+            session.attributes.requestInfo = output.attributes;
             response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
                 
         });
@@ -224,9 +232,10 @@ function handleGetRandomWordRequest(intent, session, response) {
             var speechOutput = output.speechOutput;
             var cardTitle = output.cardTitle;
             var cardContent = output.cardContent;
-            var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
+            var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
-   
+            
+            session.attributes.requestInfo = output.attributes;
             response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
                 
         });

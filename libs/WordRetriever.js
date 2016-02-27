@@ -1,3 +1,8 @@
+//Changes: 
+// -added url as WordRequest object property
+// -added url to response card 
+// -added attributes property to WordRequest
+
 var Promise = require('./es6-promise').Promise;
 var https = require('https');
 
@@ -6,7 +11,7 @@ function WordRequest(date){
     var firstWordDate = new Date("1999-05-03");
     var todaysDate = new Date();
 
-    if (!date || date.valueOf() % 1 !== 0 ) {
+    if (!date || isNaN(date.valueOf())) {
 
       date = todaysDate;
 
@@ -29,8 +34,9 @@ function WordRequest(date){
       }
 
     }
-
+    
     this.date = date;
+    this.weekday = date.getDay();
     this.year = date.getFullYear() + "";
     this.month = "" + (date.getMonth()+1);
     this.day = "" + date.getDate();  
@@ -41,10 +47,11 @@ function WordRequest(date){
         
         var day = (this.day.charAt(0) == '0') ? this.day.replace('0','') : this.day;
 
+        var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];   
-        
-        return monthNames[this.date.getMonth()] + " " + day + ", " + this.year;
+
+        return dayNames[this.weekday] + ", " + monthNames[this.date.getMonth()] + " " + day + ", " + this.year;
     };
 
     //builds query
@@ -56,12 +63,14 @@ function WordRequest(date){
         if (this.day.length < 2)
             this.day = "0" + this.day;
 
+        this.url = "http://dictionary.reference.com/wordoftheday/" + this.year + "/" + this.month + "/" + this.day;
+
         var baseQueryURL = "dictionary.reference.com%2Fwordoftheday";
         var slash = "%2F"; 
         var queryURL = "url%3D'"+baseQueryURL+slash+this.year+slash+this.month+slash+this.day+"'"; 
 
         var start = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20data.html.cssselect%20WHERE%20(";
-        var mid = "%20AND%20css%3D'div.definition-header')%20OR%20("
+        var mid = "%20AND%20css%3D'div.definition-header')%20OR%20(";
         var end = "%20AND%20css%3D'ol.definition-list')&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
 
         var query = start+queryURL+mid+queryURL+end;
@@ -74,10 +83,11 @@ function WordRequest(date){
 
         var query = this.query();
 
+        //NO ERROR HERE
         return new Promise(function(resolve, reject) {
-            
+            //EXIT BEFORE FINISHING HERE
             https.get(query, function(res) {
-              
+            //TIMEOUT HERE  
                 var body = '';
 
                 res.on('data', function(chunk) {
@@ -103,9 +113,10 @@ function WordRequest(date){
     this.returnWord = function(res) {
 
         try{
-                        
+                                    
             var definition;
             var defs = [];
+            var attributes = {};
             var response = {};
             var rsp = res();
             var wotd = rsp.results[0].div.strong || rsp.results[0].div.h1.strong;
@@ -138,8 +149,8 @@ function WordRequest(date){
             var cardTitle = wotd.toUpperCase() + ": " + spokenDate + " Word of the Day";
             var cardContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
 
-            var prefixContent = (spokenDate == "May 03, 1999") ? "Dictionary.com did not begin providing words of the day until " + spokenDate + ". " + 
-                    spokenDate + "'s Word of the Day was " : "The Word of the Day for " + spokenDate + " is " ;
+            var prefixContent = (spokenDate == "Monday, May 3, 1999") ? "Dictionary.com did not begin providing words of the day until " + spokenDate + 
+                    ". This inaugural Word of the Day was " : "The Word of the Day for " + spokenDate + " is " ;
                 prefixContent += wotd + ", which means: ";
             
 
@@ -157,10 +168,16 @@ function WordRequest(date){
             speechText = speechText + "Would you like to hear another day's word of the day?";
             speechOutput = prefixContent + speechText;
 
+            attributes.word = wotd;
+            attributes.definition = defs;
+            attributes.url = this.url;
+            attributes.query = this.query();
+
             response = {
                 speechOutput : speechOutput,
                 cardTitle : cardTitle,
-                cardContent : cardContent,
+                cardContent : cardContent + " Read more at: " + this.url,
+                attributes : attributes
             };
 
             return response;
@@ -173,7 +190,8 @@ function WordRequest(date){
             response = {
                 speechText : err,
                 cardTitle : "Word of the Day",
-                cardContent : err
+                cardContent : err,
+                attributes: attributes
             };
 
             return response;
@@ -184,4 +202,3 @@ function WordRequest(date){
 }
 
 module.exports = WordRequest;
-
