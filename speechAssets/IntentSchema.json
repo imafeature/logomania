@@ -6,18 +6,21 @@
         {
           "name": "date",
           "type": "AMAZON.DATE"
-        }//,
-    //     {
-    //       "name": "day",
-    //       "type": "string"
-    //     },
-    //   ]
-    // },
+        },
+        {
+          "name": "Day",
+          "type": "NAMED_DAYS"
+        }
+      ]
+    },
     {
       "intent": "GetTodaysWordIntent"
     },
     {
-      "intent": "GetPreviousWordIntent"
+      "intent": "GetRandomWordIntent"
+    },
+    {
+      "intent": "AMAZON.YesIntent"
     },
     {
       "intent": "AMAZON.HelpIntent"

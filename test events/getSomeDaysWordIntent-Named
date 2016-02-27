@@ -1,24 +1,30 @@
 {
   "session": {
-    "sessionId": "SessionId.b7f56d28-68ec-48bb-b646-bd8a665afee4",
+    "sessionId": "SessionId.e9bb18ed-8fc4-4c88-a62a-937b05eb74d2",
     "application": {
       "applicationId": "amzn1.echo-sdk-ams.app.ba54358d-ea2f-4bb8-b40f-320aa2d5a108"
+    },
+    "attributes": {
+      "inquiry": "word"
     },
     "user": {
       "userId": "amzn1.echo-sdk-account.AHNYT3BRICDLOFE4RVCRHM7WK7BHI5QX2I4O25UWWX3KWSDBWYKRA"
     },
-    "new": true
+    "new": false
   },
   "request": {
     "type": "IntentRequest",
-    "requestId": "EdwRequestId.53ef91a0-6360-4f6e-addf-ac39e509f700",
-    "timestamp": "2016-02-21T16:51:39Z",
+    "requestId": "EdwRequestId.deffff18-0f7e-4125-b0a5-89f01e75f016",
+    "timestamp": "2016-02-22T02:42:31Z",
     "intent": {
       "name": "GetSomeDaysWordIntent",
       "slots": {
         "date": {
-          "name": "date",
-          "value": "2012-04-01"
+          "name": "date"
+        },
+        "Day": {
+          "name": "Day",
+          "value": "monday's"
         }
       }
     }
