@@ -6,33 +6,33 @@ var urlPrefix = 'http://dictionary.reference.com/wordoftheday/';
 var AlexaSkill = require('./AlexaSkill');
 var WordRequest = require('./WordRetriever');
 
-var Verbivore = function() {
+var LogophileSkill = function() {
     AlexaSkill.call(this, APP_ID);
 };
 
-Verbivore.prototype = Object.create(AlexaSkill.prototype);
-Verbivore.prototype.constructor = Verbivore;
+LogophileSkill.prototype = Object.create(AlexaSkill.prototype);
+LogophileSkill.prototype.constructor = LogophileSkill;
 
 
-Verbivore.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
-    console.log("Verbivore onSessionStarted requestId: " + sessionStartedRequest.requestId
+LogophileSkill.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
+    console.log("LogophileSkill onSessionStarted requestId: " + sessionStartedRequest.requestId
         + ", sessionId: " + session.sessionId);
 
     session.attributes.requestInfo = {};
 };
 
-Verbivore.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
-    console.log("Verbivore onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
+LogophileSkill.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
+    console.log("LogophileSkill onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
 
     getWelcomeResponse(response);
 };
 
-Verbivore.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
+LogophileSkill.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
     console.log("onSessionEnded requestId: " + sessionEndedRequest.requestId
         + ", sessionId: " + session.sessionId);
 };
 
-Verbivore.prototype.intentHandlers = {
+LogophileSkill.prototype.intentHandlers = {
 
     //done
     "GetTodaysWordIntent": function (intent, session, response) {
@@ -62,7 +62,7 @@ Verbivore.prototype.intentHandlers = {
     },
 
     "AMAZON.HelpIntent": function (intent, session, response) {
-        var speechOutput = "Verbivore returns Dictionary.com's Word of the Day. You can get today or another day's word by saying something like" +
+        var speechOutput = "Logophile returns Dictionary.com's Word of the Day. You can get today or another day's word by saying something like" +
             "What is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
         var repromptOutput = "Which date's Word of the Day would you like?";
         var cardTitle = "About Verbivore Skill";
@@ -72,12 +72,12 @@ Verbivore.prototype.intentHandlers = {
     },
 
     "AMAZON.StopIntent": function (intent, session, response) {
-        var speechOutput = "Closing Verbivore. Be sure to check back tomorrow for a new Word of the Day.";
+        var speechOutput = "Closing Logophile. Be sure to check back tomorrow for a new Word of the Day.";
         response.tell(speechOutput);
     },
 
     "AMAZON.CancelIntent": function (intent, session, response) {
-        var speechOutput = "Closing Verbivore. Goodbye";
+        var speechOutput = "Closing Logophile. Goodbye";
         response.tell(speechOutput);
     }
 };
@@ -85,11 +85,17 @@ Verbivore.prototype.intentHandlers = {
 
 function getWelcomeResponse(response) {
        
-    var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
+    var cardTitle = "Word of the Day";
+    var repromptOutput = "You can use Logophile to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
+<<<<<<< HEAD
     var speechOutput = "I have opened Verbivore. What date's Word of the Day would you like me to retrieve?";
+=======
+    var speechOutput = "Hello logophile. Which day's Word of the Day do you want?";
+    var cardOutput = "Logophile.Which day's Word of the Day do you want?";
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
 
-    response.ask(speechOutput, repromptOutput);
+    response.askWithCard(speechOutput, repromptOutput, cardTitle, cardOutput);
 }
 
 function handleGetTodaysWordRequest(intent, session, response) {
@@ -111,7 +117,7 @@ function handleGetTodaysWordRequest(intent, session, response) {
             var speechOutput = output.speechOutput;
             var cardTitle = output.cardTitle;
             var cardContent = output.cardContent;
-            var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
+            var repromptOutput = "You can use Logophile to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
    
             session.attributes.requestInfo = output.attributes;
@@ -122,8 +128,8 @@ function handleGetTodaysWordRequest(intent, session, response) {
 }
 
 function handleSomeDaysWordRequest(intent, session, response) {
-//Stop Undoing when you see this disappear!
     
+<<<<<<< HEAD
     var date = function (){
         
       if ( intent.slots.date && intent.slots.date.value )
@@ -162,6 +168,10 @@ function handleSomeDaysWordRequest(intent, session, response) {
     };            
 
     var wordRequest = new WordRequest(date());
+=======
+    var date = new Date(intent.slots.date.value);
+    var wordRequest = new WordRequest(date);
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
 
     //Defines output variables with the promised data
     wordRequest.requestWord()
@@ -178,7 +188,11 @@ function handleSomeDaysWordRequest(intent, session, response) {
             var speechOutput = output.speechOutput;
             var cardTitle = output.cardTitle;
             var cardContent = output.cardContent;
+<<<<<<< HEAD
             var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
+=======
+            var repromptOutput = "You can use Logophile to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
    
             session.attributes.requestInfo = output.attributes;
@@ -232,7 +246,11 @@ function handleGetRandomWordRequest(intent, session, response) {
             var speechOutput = output.speechOutput;
             var cardTitle = output.cardTitle;
             var cardContent = output.cardContent;
+<<<<<<< HEAD
             var repromptOutput = "You can use Verbivore to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like, " +
+=======
+            var repromptOutput = "You can use Logophile to retrieve today's or a previous day's Word of the Day from Dictionary.com by saying something like: " +
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
             "what is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
             
             session.attributes.requestInfo = output.attributes;
@@ -246,6 +264,6 @@ function handleGetRandomWordRequest(intent, session, response) {
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
     // Create an instance of the HistoryBuff Skill.
-    var verbivore = new Verbivore();
-    verbivore.execute(event, context);
+    var logophile = new LogophileSkill();
+    logophile.execute(event, context);
 };

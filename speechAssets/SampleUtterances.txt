@@ -12,6 +12,7 @@ GetTodaysWordIntent give me the word of the day
 GetTodaysWordIntent today's
 GetTodaysWordIntent today's word
 
+<<<<<<< HEAD
 GetSomeDaysWordIntent get word {date}
 GetSomeDaysWordIntent the word on {date}
 GetSomeDaysWordIntent the word from {date}
@@ -20,6 +21,10 @@ GetSomeDaysWordIntent the word of the day on {date}
 GetSomeDaysWordIntent what's the word {date}
 GetSomeDaysWordIntent the word of the day {date}
 GetSomeDaysWordIntent give me {date} word of the day
+=======
+GetSomeDaysWordIntent get word for {date}
+GetSomeDaysWordIntent give me {date}'s word of the day
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
 GetSomeDaysWordIntent give me the word of the day from {date} 
 GetSomeDaysWordIntent what was the word of the day {date}
 GetSomeDaysWordIntent what was the word of the day on {date}
@@ -29,6 +34,7 @@ GetSomeDaysWordIntent {date} word
 GetSomeDaysWordIntent what {date} word was
 GetSomeDaysWordIntent what {date} word is
 
+<<<<<<< HEAD
 GetSomeDaysWordIntent get word from {Day}
 GetSomeDaysWordIntent get word {Day}
 GetSomeDaysWordIntent get {Day} word
@@ -82,6 +88,23 @@ AMAZON.YesIntent yeah
 AMAZON.StopIntent no I'm done
 AMAZON.StopIntent no I'm finished
 AMAZON.StopIntent no that's all
+=======
+GetPreviousWordIntent yes
+GetPreviousWordIntent yup
+GetPreviousWordIntent sure
+GetPreviousWordIntent yes please
+GetPreviousWordIntent yeah
+
+GetExampleSentenceIntent sentence
+GetExampleSentenceIntent use it in a sentence
+GetExampleSentenceIntent I want to hear it in a sentence
+GetExampleSentenceIntent hear it in a sentence
+
+AMAZON.StopIntent nah, I'm done
+AMAZON.StopIntent no, I'm done
+AMAZON.StopIntent no, I'm finished
+AMAZON.StopIntent no, that's all
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
 AMAZON.StopIntent I'm done
 AMAZON.StopIntent I'm finished
 AMAZON.StopIntent that's all
@@ -89,6 +112,7 @@ AMAZON.StopIntent none
 AMAZON.StopIntent no
 AMAZON.StopIntent nah
 
+<<<<<<< HEAD
 AMAZON.CancelIntent nothing
 AMAZON.CancelIntent never mind
 AMAZON.CancelIntent that's enough
@@ -116,3 +140,13 @@ AMAZON.HelpIntent I need help
 AMAZON.HelpIntent I'm confused
 AMAZON.HelpIntent wait what
 AMAZON.HelpIntent what do I do
+=======
+
+
+
+
+
+
+
+
+>>>>>>> parent of 98e09d2... All retrieval functionality complete
