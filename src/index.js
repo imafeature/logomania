@@ -65,7 +65,7 @@ Verbivore.prototype.intentHandlers = {
         var speechOutput = "Verbivore returns Dictionary.com's Word of the Day. You can get today or another day's word by saying something like" +
             "What is today's word of the day, or what was the Word of the Day on January first. You may also say never mind to exit. So, what would you like to do?";
         var repromptOutput = "Which date's Word of the Day would you like?";
-        var cardTitle = "About Verbivore Skill"
+        var cardTitle = "About Verbivore Skill";
         var cardContent = speechOutput;
 
         response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
