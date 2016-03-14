@@ -100,6 +100,7 @@ function handleGetTodaysWordRequest(intent, session, response) {
     wordRequest.requestWord()
 
         .then(function(res){
+                    throw new Error("Blah " + JSON.stringify(JSON.parse(res)));
             wordRequest.parsedResponse = wordRequest.returnWord(res);
             return wordRequest;
         })

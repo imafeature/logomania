@@ -10,6 +10,7 @@ GetTodaysWordIntent what the word is for today
 GetTodaysWordIntent give me today's word
 GetTodaysWordIntent give me the word of the day
 GetTodaysWordIntent today's
+GetTodaysWordIntent today
 GetTodaysWordIntent today's word
 
 GetSomeDaysWordIntent get word {date}

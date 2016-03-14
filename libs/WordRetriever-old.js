@@ -70,9 +70,10 @@ function WordRequest(date){
         
        //when querying html with xpath
        var start = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20"
-       var end = "and%20compat%3D%22html5%22%20and%20((xpath%3D'%2F%2Fol%5Bcontains(%40class%2C%22definition-list%22)%5D')%20or%20(xpath%3D'%2F%2Fdiv%5Bcontains(%40class%2C%22definition-header%22)%5D'))&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+       var end = "%22%20and%20compat%3D%22html5%22%20and%20((xpath%3D'%2F%2Fol%5Bcontains(%40class%2C%22definition-list%22)%5D')%20or%20(xpath%3D'%2F%2Fdiv%5Bcontains(%40class%2C%22definition-header%22)%5D'))&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
        var queryURL = "url%3D%22http%3A"+slash+slash+baseQueryURL+slash+this.year+slash+this.month+slash+this.day;
-
+        var query = start+queryURL+end;
+        
         // when querying data.html.css
         // var baseQueryURL = "dictionary.reference.com%2Fwordoftheday";
         // var start = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20data.html.cssselect%20WHERE%20(";
@@ -81,7 +82,7 @@ function WordRequest(date){
         // var queryURL = "url%3D'"+baseQueryURL+slash+this.year+slash+this.month+slash+this.day+"'"; 
         // var query = start+queryURL+mid+queryURL+end;
 
-        var query = start+queryURL+end;
+
 
         return query;
     };
