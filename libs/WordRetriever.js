@@ -7,7 +7,7 @@ var Promise = require('./es6-promise').Promise;
 var https = require('https');
 
 function WordRequest(date){
-    
+
     var firstWordDate = new Date("1999-05-03");
     var todaysDate = new Date();
 
