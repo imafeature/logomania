@@ -7,7 +7,7 @@ var Promise = require('./es6-promise').Promise;
 var https = require('https');
 
 function WordRequest(date){
-
+    
     var firstWordDate = new Date("1999-05-03");
     var todaysDate = new Date();
 
@@ -63,17 +63,9 @@ function WordRequest(date){
         if (this.day.length < 2)
             this.day = "0" + this.day;
 
-        this.url = "http://dictionary.reference.com/wordoftheday/" + this.year + "/" + this.month + "/" + this.day;
+        this.url = "http://dictionary.reference.com/wordoftheday/" + this.year + "/" + this.month + "/" + this.day ;
 
-        var baseQueryURL = "dictionary.reference.com%2Fwordoftheday";
-        var slash = "%2F"; 
-        var queryURL = "url%3D'"+baseQueryURL+slash+this.year+slash+this.month+slash+this.day+"'"; 
-
-        var start = "https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20data.html.cssselect%20WHERE%20(";
-        var mid = "%20AND%20css%3D'div.definition-header')%20OR%20(";
-        var end = "%20AND%20css%3D'ol.definition-list')&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-
-        var query = start+queryURL+mid+queryURL+end;
+        var query = "https://echoserver.azureedge.net/verbivore/" + this.month + "/" + this.day + "/" + this.year;
 
         return query;
     };
@@ -96,7 +88,7 @@ function WordRequest(date){
 
                 res.on('end', function() {
                     resolve(function() {
-                        var res = JSON.parse(body).query.results;
+                        var res = JSON.parse(body);
                         return res;
                     });
 
@@ -114,38 +106,13 @@ function WordRequest(date){
 
         try{
                                     
-            var definition;
-            var defs = [];
             var attributes = {};
             var response = {};
             var rsp = res();
-            var wotd = rsp.results[0].div.strong || rsp.results[0].div.h1.strong;
-            var temp = rsp.results[1].ol.li;
+            var wotd = rsp["wordOfTheDay"];
+            var defs = rsp["definitions"];
             var spokenDate = this.spokenDate();
-
-            if (Array.isArray(temp)){
-           
-                for (var i = 0; i < temp.length; i++){
-
-                    definition = temp[i].span.content || temp[i].span;
-                    definition = definition.replace(':','');
-
-                    defs.push((i+1)+ ". " + definition);
-
-                } 
-
-            } else {
-                
-                definition = temp.span.content || temp.span;
-                definition = definition.replace(':','');
-
-                //TODO: fix the weird space before appended period
-                //      and the occasional randomly prepended period
-
-                defs.push(definition);  
             
-            }
-
             var cardTitle = wotd.toUpperCase() + ": " + spokenDate + " Word of the Day";
             var cardContent = "The Word of the Day for " + spokenDate + " is " + wotd + ", which means: ";
 
@@ -161,8 +128,12 @@ function WordRequest(date){
                 throw new Error("There was a problem retrieving the definition for " + wotd + ", today's word of the day.");
 
             for (var i = 0; i < defs.length; i++) {
-                cardContent = cardContent + defs[i] + " ";
-                speechText = speechText + defs[i] + " ";
+                
+                var ordinal = (defs.length > 1) ? (i+1)+ ". " : "";
+
+
+                cardContent = cardContent + ordinal + defs[i] + " ";
+                speechText = speechText + ordinal +  defs[i] + " ";
             }
 
             speechText = speechText + "Would you like to hear another day's word of the day?";
